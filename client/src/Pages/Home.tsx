@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Web3 from 'web3';
-import axios from 'axios';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -40,14 +40,14 @@ const eventHandler = async() =>{
 
   setIsConnected(true)
 
-  axios.post("/account/details",{ address: slicedAccount(account[0]), balance: balance})
-  .then((response)=>{
-    if(response){
-      console.log(response.data.message)
-      console.log(response.data.details)
-    }
-  })
-  .catch(err=>console.log(err))
+  // axios.post("/account/details",{ address: slicedAccount(account[0]), balance: balance})
+  // .then((response)=>{
+  //   if(response){
+  //     console.log(response.data.message)
+  //     console.log(response.data.details)
+  //   }
+  // })
+  // .catch(err=>console.log(err))
 
 }
 

@@ -7,7 +7,7 @@ export const accountSchema = new mongoose.Schema({
         // unique:true
     },
     balance:{
-        type:  Number 
+        type:  Number
     },
     symbol:{
         type: String,
