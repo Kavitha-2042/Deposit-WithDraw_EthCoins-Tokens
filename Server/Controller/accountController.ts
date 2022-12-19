@@ -26,101 +26,44 @@ export const accountDetails = (req:express.Request, res: express.Response) =>{
 
 }
 
-export const ServerAccount = (req:express.Request, res: express.Response) =>{
-  
 
-}
+export const deposit = (req: express.Request, res: express.Response) =>{
+    const { address, amount} = req.body;
 
-
-export const deposit = (req:express.Request, res: express.Response) =>{
-    const { address, amount } = req.body;
-
-   try {
-    
-    const web3 = new Web3("https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
-    
-    const account1 = address;
-    const account2 = process.env.SERVER_ACCOUNT as string;
-
-
-    // const check = web3.eth.getBalance(account1, (err, result)=> console.log(result))
-    // .then((response)=>{
-    //     return res.json({
-    //         message:"sent",
-    //         bal: response
-    //     })
-    // })
-    // .catch(err=>console.log(err))
-       // const parsedTotal = web3.utils.toBN(total)
-            // const parsedAmount = web3.utils.toBN(amount) 
-
-
-
-            // const parsedTotal = web3.utils.fromWei(total, "Gwei")
-            // const parsedAmount = web3.utils.fromWei(amount, "Gwei")
-
-
-            // accountModel.updateMany({address: account1},{balance: parsedTotal + parsedAmount})
-
-            // var value = (0.001*(10**total)).toString();
-            // var parsedTotal = web3.utils.toBN(value)
-
-            // var value = (0.001*(10**total)).toString();
-            // var parsedTotal = web3.utils.toBN(total)
-
-            // var value1 = (0.001*(10*amount)).toString();
-            // var parsedAmount = web3.utils.toBN(amount)
-
-    
-
-    accountModel.find({address})
+    accountModel.findOne({ address })
     .then((findResponse)=>{
-        if(findResponse.length > 0){
-            const total = findResponse[0].balance
-
-            const parsedTotal = web3.utils.toNumber(total)
-            const parsedAmount = web3.utils.toNumber(amount)
-
-
-         
-
-            accountModel.updateMany({address: account1},{balance: parsedTotal + parsedAmount})
-            // accountModel.updateMany({address: account1},{balance: {$add:{parsedTotal, parsedAmount}}})
-            // accountModel.updateMany({address: account1},{balance: {$add:{total, amount}}})
+        if( findResponse ){
+            console.log(findResponse)
+            // let balance = findResponse[0].balance + amount;
+            // accountModel.updateOne({address: address},{$set:{ balance: findResponse[0]+amount}})
+            accountModel.updateOne({address:address}, { balance: findResponse.amount+amount})
             .then((updateResponse)=>{
                 return res.json({
-                    message:"Successful in update",
-                    fullResponse: updateResponse
+                    message:"updated",
+                    res: updateResponse,
+                    bal: findResponse
                 })
-            }) 
-            .catch(err=>console.log(err)) 
+            })
+            .catch(err=>console.log(err))
+            
         }
-        accountModel.create({ address, amount})
+      else  {
+        accountModel.create( { address, amount })
         .then((createResponse)=>{
-            const parsedAmount = web3.utils.toNumber(amount)
-            const total = 0;
-            accountModel.updateMany({address: account1},{balance: total + parsedAmount})
-            // accountModel.updateMany({address: account1},{balance: {$add:{parsedTotal, parsedAmount}}})
-            // accountModel.updateMany({address: account1},{balance: {$add:{total, amount}}})
-            .then((createUpdateResponse)=>{
+            // let balance;
+            accountModel.updateOne({address: address}, {balance: amount })
+            .then((insertResponse)=>{
                 return res.json({
-                    message:"Successful in create",
-                    fullResponse: createUpdateResponse,
-                    create: createResponse
+                    message:"Insered",
+                    response: createResponse,
+                    bal: insertResponse,
+                    again: createResponse
                 })
-            }) 
-            .catch(err=>console.log(err)) 
+            })
+            .catch(err=>console.log(err))
         })
-        .catch(err=>console.log(err)) 
+        .catch(err=>console.log(err))}
     })
     .catch(err=>console.log(err))
-    
-
- 
-
-   } catch (error) {
-    
-   }
-        
-    
 }
+

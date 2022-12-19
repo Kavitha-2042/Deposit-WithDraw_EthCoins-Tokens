@@ -4,11 +4,10 @@ import mongoose, { model } from "mongoose";
 export const accountSchema = new mongoose.Schema({
     address:{
         type: String,
-        unique:true
+        // unique:true
     },
     balance:{
-        type:  Number,
-        default: 0
+        type:  Number 
     },
     symbol:{
         type: String,
