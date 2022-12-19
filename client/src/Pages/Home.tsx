@@ -69,8 +69,8 @@ const eventHandler = async() =>{
               <p>Your account is: {accounts}</p>
               <p>Your balance is: {balances} GoerliETH</p>
               <div>
-                <Link to='/deposit'><button>Deposit</button></Link>
-                <button>WithDraw</button>
+                <Link to='/deposit'><button style={{cursor:"pointer"}}>Deposit</button></Link>
+                <Link to='/withdraw'><button style={{cursor:"pointer"}}>WithDraw</button></Link>
                 
               </div>
 

@@ -6,6 +6,7 @@ import mongoose from "mongoose"
 import bodyParser from "body-parser"
 import cors from "cors"
 import accountRoute from "./Routes/accountRoute"
+import withDrawRoute from './Routes/withDrawRoute';
 
 const app:express.Application = express()
 
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
 app.use("/account", accountRoute)
+app.use("/withDraw", withDrawRoute)
 
 mongoose.set('strictQuery', false)
 
